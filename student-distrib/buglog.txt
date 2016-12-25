@@ -1,0 +1,138 @@
+Bug Log
+
+
+10/17
+
+
+Only one keyboard interrupt fires
+	PIC was sending EOI in wrong format 
+-	Found by Brandon, fixed by Brandon	
+
+
+Separate file for assembly linkage of interrupt handlers causing double inclusion / not functioning
+	Instead used inline assembly to simplify process 
+-	Found by Arnav, fixed by Brandon
+
+
+RTC seems to not get set to the correct frequencies
+	Frequency was being written into Register A instead of the rate 
+-	Found by Mohammed, fixed by Mohammed
+
+
+
+
+10/18
+
+
+Reading from “.” doesn’t call directory read function
+	I don’t think it  even finds “.” <- search started with 2nd entry
+	Now finds “.”, pagefaults on second read <- Bug with test code
+	-	Found by Brandon, fixed by Brandon
+
+
+Shift / Caps/ Shift and caps functionality buggy
+	Ordering of conditional statements mattered, the shift & caps branch was getting skipped, needed to be placed at the top of the conditional 
+	-	Found by Greg, fixed by Arnav 
+
+
+Compile warning: file_ops and dir_ops unused
+	They actually are used. Not sure why it’s warning.
+	I’m thinking about just moving all file_operations structs to a table anyways.
+	marked as unused 
+	-	Found by Brandon, fixed by Brandon	
+
+
+Security- memory not cleared after halt, so it could be scraped
+	Memory now cleared on halt 
+	-	Found by Brandon, fixed by Brandon
+
+Jump tables not properly loading for OCRW type specific system calls 
+	Various syntax errors were fixed to load jump tables in open system call 
+	-	Found by Arnav, fixed by Arnav
+	
+
+No interrupts trigger after a system call
+	System call gate not set properly to clear IF (should have used interrupt gate instead of trap gate)
+	-	Found by Arnav & Brandon, fixed by Arnav
+
+
+Processes halt system after fault TA found
+	Fixed by changing calls to fail to halt 
+	-	Found by Brandon, fixed by Brandon	
+
+
+Terminal only reads first char 
+	Line_buf_index is reset to 0 early
+	-	Found by Brandon, fixed by Brandon	
+
+
+Halt sometimes returns to parent of parent
+	Esp0 was stored incorrectly 
+	-	Found by Brandon, fixed by Brandon	 
+
+
+Exec does not check for null command pointer TA found
+	Exec now checks for null pointer 
+	-	Found by Brandon, fixed by Brandon	
+
+
+Fish runs slower when running in multiple terminals
+	RTC now has separate flag for each terminal 
+	-	Found by Brandon, fixed by Brandon	
+
+
+
+10/24
+
+
+RTC is not outputting varying rates
+	Test case was incorrect. Buffer was getting passed in incorrectly. Fixed by passing in pointer of buffer
+	-	Found by Mohammed, fixed by Mohammed
+
+
+
+11/13
+
+
+Read, write, open, close for terminal and RTC are not being called
+	Terminal and RTC function signatures were changed to match file system function signature, which matches the system call signatures for read, write, open, and close 
+	-	Found by Mohammed, fixed by Mohammed
+
+
+
+11/14
+
+Stack was being corrupted by assembly linkage
+	Popped too many 
+	-	Found by TA, fixed by Arnav
+
+
+
+12/1
+
+
+Execute fails with space after arguments
+	Fixed 
+	-	Found by Brandon, fixed by Brandon	
+
+
+ALT+Function-Keys not functioning
+	We were trying to find the function-keys from the keyboard characters but we merely had to just analyze the scancode itself to match F1, F2, F3
+	-	Found by Mohammed, fixed by Mohammed
+
+
+Video memory not getting mapped correctly to each terminal
+	Three different video tables were made to account for each video memory for each terminal in multiple terminals implementation
+	-	Found by Brandon, fixed by Greg
+
+
+Characters are not deleting after first line is printed out
+	Negative numbers do not work with mod function so instead an if statement fixed it
+	-	Found by Greg, fixed by Greg
+
+
+ 
+
+
+
+
